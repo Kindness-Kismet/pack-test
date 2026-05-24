@@ -3,8 +3,8 @@ name: Test Windows - Inno Setup
 on:
   push:
     paths:
-      - 'src/**'
-      - '.github/workflows/test-win.yml'
+      - "src/**"
+      - ".github/workflows/test-win.yml"
   workflow_dispatch:
 
 jobs:
@@ -15,12 +15,13 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: 安装依赖
+      - name: "安装依赖"
         run: pip install -e .
 
-      - name: 下载最新 Inno Setup 并打包测试
-        run: pack-test win
+      - name: "下载最新 Inno Setup 并打包测试"
         env:
+          PYTHONIOENCODING: utf-8
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pack-test win

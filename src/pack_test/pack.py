@@ -72,7 +72,7 @@ def run_appimage_test() -> bool:
     # 1. 下载 appimagetool
     print("\n-- 下载 appimagetool")
     import os
-    tool = download_latest("AppImage/AppImageKit", r"appimagetool-x86_64\.AppImage$", work / "tools")
+    tool = download_latest("AppImage/AppImageKit", r"^appimagetool-x86_64\.AppImage$", work / "tools")
     # 提取绕过 FUSE（CI 环境通常无 FUSE）
     subprocess.run([str(tool), "--appimage-extract"], cwd=work / "tools", check=True)
     appimagetool = work / "tools" / "squashfs-root" / "AppRun"
@@ -141,6 +141,7 @@ def run_rpm_test() -> bool:
     if work.exists():
         import shutil
         shutil.rmtree(work)
+    work.mkdir(parents=True, exist_ok=True)
 
     spec = create_rpm_spec(work)
     rpmbuild_dir = work / "rpmbuild"

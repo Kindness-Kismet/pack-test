@@ -18,13 +18,13 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: 安装依赖
+      - name: "安装依赖"
         run: pip install -e .
 
-      - name: AppImage 打包测试
-        run: pack-test appimage
+      - name: "AppImage 打包测试"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pack-test appimage
 
   deb:
     runs-on: ubuntu-latest
@@ -33,9 +33,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: 安装依赖
+      - name: "安装依赖"
         run: pip install -e .
-      - name: deb 打包测试
+      - name: "deb 打包测试"
         run: pack-test deb
 
   rpm:
@@ -45,31 +45,31 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: 安装 rpm 工具链
+      - name: "安装 rpm 工具链"
         run: sudo apt-get update && sudo apt-get install -y rpm
-      - name: 安装依赖
+      - name: "安装依赖"
         run: pip install -e .
-      - name: RPM 打包测试
+      - name: "RPM 打包测试"
         run: pack-test rpm
 
   aur:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
-      - name: 安装基础工具
+      - name: "安装基础工具"
         run: |
           pacman -Syu --noconfirm base-devel python python-pip git sudo
 
       - uses: actions/checkout@v4
 
-      - name: 安装依赖
+      - name: "安装依赖"
         run: pip install -e . --break-system-packages
 
-      - name: 创建构建用户 (makepkg 禁止 root)
+      - name: "创建构建用户 (makepkg 禁止 root)"
         run: |
           useradd -m builder
           echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown -R builder:builder "$GITHUB_WORKSPACE"
 
-      - name: AUR PKGBUILD 构建测试
+      - name: "AUR PKGBUILD 构建测试"
         run: su builder -c "pack-test aur"
