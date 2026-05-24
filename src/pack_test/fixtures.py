@@ -17,12 +17,12 @@ def create_innosetup_fixture(work_dir: Path) -> Path:
         "AppName=MyApp\n"
         "AppVersion=1.0.0\n"
         "DefaultDirName={pf}\\MyApp\n"
-        f"OutputDir={output_dir}\n"
+        "OutputDir=output\n"
         "OutputBaseFilename=MyAppSetup\n"
         "Compression=lzma\n"
         "SolidCompression=yes\n\n"
         "[Files]\n"
-        f'Source: "{src}\\*"; DestDir: "{{app}}"; Flags: ignoreversion\n',
+        'Source: "src\\*"; DestDir: "{app}"; Flags: ignoreversion\n',
         encoding="utf-8",
     )
     return iss

@@ -72,9 +72,9 @@ def run_appimage_test() -> bool:
     # 1. 下载 appimagetool
     print("\n-- 下载 appimagetool")
     import os
-    tool = download_latest("AppImage/AppImageKit", r"^appimagetool-x86_64\.AppImage$", work / "tools")
+    tool = download_latest("AppImage/appimagetool", r"^appimagetool-x86_64\.AppImage$", work / "tools")
     # 提取绕过 FUSE（CI 环境通常无 FUSE）
-    subprocess.run([str(tool), "--appimage-extract"], cwd=work / "tools", check=True)
+    subprocess.run([str(tool.resolve()), "--appimage-extract"], cwd=str(work / "tools"), check=True)
     appimagetool = work / "tools" / "squashfs-root" / "AppRun"
 
     # 2. 构造 AppDir
@@ -151,7 +151,7 @@ def run_rpm_test() -> bool:
     print("\n-- 打包 RPM")
     subprocess.run([
         "rpmbuild", "-bb", str(spec),
-        "--define", f"_topdir {rpmbuild_dir}",
+        "--define", f"_topdir {rpmbuild_dir.resolve()}",
     ], check=True)
 
     # 产物在 RPMS/x86_64/myapp-1.0.0-1.x86_64.rpm
