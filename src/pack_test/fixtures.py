@@ -36,7 +36,7 @@ def create_appdir(work_dir: Path) -> Path:
     (appdir / "AppRun").chmod(0o755)
 
     (appdir / "myapp.desktop").write_text(
-        "[Desktop Entry]\nType=Application\nName=MyApp\nExec=AppRun\nIcon=myapp\n"
+        "[Desktop Entry]\nType=Application\nName=MyApp\nExec=AppRun\nIcon=myapp\nCategories=Utility;\n"
     )
     (appdir / "myapp.png").write_bytes(b"")
 
