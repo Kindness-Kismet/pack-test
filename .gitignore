@@ -1,0 +1,24 @@
+# 构建产物
+_build/
+dist/
+*.egg-info/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 测试临时产物
+_work/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CI 下载的工具
+tools/

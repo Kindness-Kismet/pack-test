@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pack-test"
+version = "0.1.0"
+description = "多平台安装器打包验证工具 — 动态下载最新安装器并测试能否正常打包"
+requires-python = ">=3.11"
+
+[project.scripts]
+pack-test = "pack_test.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pack_test"]

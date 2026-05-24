@@ -1,0 +1,26 @@
+name: Test Windows - Inno Setup
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - '.github/workflows/test-win.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -e .
+
+      - name: 下载最新 Inno Setup 并打包测试
+        run: pack-test win
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

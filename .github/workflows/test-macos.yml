@@ -1,0 +1,39 @@
+name: Test macOS - DMG / PKG
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - '.github/workflows/test-macos.yml'
+  workflow_dispatch:
+
+jobs:
+  dmg:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -e .
+
+      - name: DMG 打包测试
+        run: pack-test dmg
+
+  pkg:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -e .
+
+      - name: PKG 打包测试
+        run: pack-test pkg
